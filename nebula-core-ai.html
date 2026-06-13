@@ -7,21 +7,12 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#000;--surface:#0d0d0d;--surface2:#141414;
-  --border:#1e1e1e;--border2:#2a2a2a;
-  --text:#fff;--muted:#888;--dim:#555;
-  --accent:#a855f7;--accent-d:#7c3aed;--accent-g:rgba(168,85,247,.18);
-  --user-bg:#fff;--user-text:#000;--ai-bg:#111;
-  --r:12px;--rs:8px;
-  --font:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;
-  --sw:280px;
-}
+:root{--bg:#000;--surface:#0d0d0d;--surface2:#141414;--border:#1e1e1e;--border2:#2a2a2a;--text:#fff;--muted:#888;--dim:#555;--accent:#a855f7;--accent-d:#7c3aed;--accent-g:rgba(168,85,247,.18);--user-bg:#fff;--user-text:#000;--ai-bg:#111;--r:12px;--rs:8px;--font:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;--sw:280px;}
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;line-height:1.6;overflow:hidden}
 #app{display:flex;height:100vh;position:relative;overflow:hidden}
-#sidebar{width:var(--sw);min-width:var(--sw);background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;transform:translateX(calc(-1 * var(--sw)));transition:transform .3s cubic-bezier(.4,0,.2,1);position:absolute;left:0;top:0;bottom:0;z-index:200;}
+#sidebar{width:var(--sw);min-width:var(--sw);background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;transform:translateX(calc(-1*var(--sw)));transition:transform .3s;position:absolute;left:0;top:0;bottom:0;z-index:200;}
 #sidebar.open{transform:translateX(0)}
-#sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:199;backdrop-filter:blur(2px);}
+#sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:199;}
 #sb-overlay.on{display:block}
 .sb-head{padding:20px 16px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
 .sb-logo{width:28px;height:28px;background:linear-gradient(135deg,var(--accent),var(--accent-d));border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;}
@@ -30,15 +21,13 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 #new-chat-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-g)}
 #sessions-list{flex:1;overflow-y:auto;padding:4px 8px 12px}
 #sessions-list::-webkit-scrollbar{width:4px}
-#sessions-list::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
-.s-group{margin-bottom:6px}
-.s-date{padding:6px 8px 3px;font-size:10px;color:var(--dim);font-weight:500;letter-spacing:.05em}
-.s-item{padding:9px 10px;border-radius:var(--rs);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;transition:background .15s;border:1px solid transparent;}
+#sessions-list::-webkit-scrollbar-thumb{background:var(--border2)}
+.s-item{padding:9px 10px;border-radius:var(--rs);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;transition:background .15s;}
 .s-item:hover{background:var(--surface2)}
-.s-item.active{background:var(--accent-g);border-color:rgba(168,85,247,.25)}
+.s-item.active{background:var(--accent-g);border:1px solid rgba(168,85,247,.25)}
 .s-title{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;}
 .s-item.active .s-title{color:var(--text)}
-.s-del{flex-shrink:0;opacity:0;cursor:pointer;color:var(--dim);transition:opacity .15s,color .15s;background:none;border:none;padding:2px;display:flex;align-items:center;}
+.s-del{flex-shrink:0;opacity:0;cursor:pointer;color:var(--dim);transition:opacity .15s;background:none;border:none;padding:2px;}
 .s-item:hover .s-del{opacity:1}
 .s-del:hover{color:#ef4444}
 .sb-foot{border-top:1px solid var(--border);padding:12px 16px}
@@ -47,26 +36,24 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 #main{flex:1;display:flex;flex-direction:column;min-width:0;height:100vh}
 #topbar{display:flex;align-items:center;justify-content:space-between;padding:0 16px;height:56px;border-bottom:1px solid var(--border);background:var(--bg);flex-shrink:0;position:relative;z-index:50;}
 .tb-side{display:flex;align-items:center;gap:6px}
-.tb-center{position:absolute;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;pointer-events:none;}
+.tb-center{position:absolute;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;}
 .tb-title{font-size:13px;font-weight:700;letter-spacing:.18em;font-family:var(--mono)}
 .tb-sub{font-size:9px;color:var(--accent);letter-spacing:.2em;font-weight:500}
 .ib{width:34px;height:34px;border-radius:50%;border:1px solid var(--border2);background:transparent;color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;flex-shrink:0;}
 .ib:hover,.ib.on{border-color:var(--accent);color:var(--accent);background:var(--accent-g)}
 .ib-sq{border-radius:var(--rs)}
-#more-menu{display:none;position:absolute;top:52px;right:16px;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r);padding:6px;min-width:190px;z-index:300;box-shadow:0 8px 32px rgba(0,0,0,.7);}
+#more-menu{display:none;position:absolute;top:52px;right:16px;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r);padding:6px;min-width:190px;z-index:300;}
 #more-menu.on{display:block}
-.mi{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--rs);cursor:pointer;font-size:13px;color:var(--muted);transition:all .15s;user-select:none;}
+.mi{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--rs);cursor:pointer;font-size:13px;color:var(--muted);transition:all .15s;}
 .mi:hover{background:var(--surface);color:var(--text)}
 .mi.red:hover{color:#ef4444}
 .mdiv{height:1px;background:var(--border);margin:4px 0}
-#chat-area{flex:1;overflow-y:auto;padding:24px 16px 8px;display:flex;flex-direction:column;gap:20px;scroll-behavior:smooth;}
+#chat-area{flex:1;overflow-y:auto;padding:24px 16px 8px;display:flex;flex-direction:column;gap:20px;}
 #chat-area::-webkit-scrollbar{width:4px}
-#chat-area::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+#chat-area::-webkit-scrollbar-thumb{background:var(--border2)}
 #welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:16px;padding:40px 20px;text-align:center;}
-.orb{width:72px;height:72px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#c084fc,var(--accent-d),#1a003a);box-shadow:0 0 40px rgba(168,85,247,.35),0 0 80px rgba(168,85,247,.12);animation:orb-p 3s ease-in-out infinite;position:relative;}
-.orb::after{content:'';position:absolute;inset:-3px;border-radius:50%;border:1px solid rgba(168,85,247,.3);animation:orb-r 3s ease-in-out infinite;}
-@keyframes orb-p{0%,100%{box-shadow:0 0 40px rgba(168,85,247,.35),0 0 80px rgba(168,85,247,.12)}50%{box-shadow:0 0 60px rgba(168,85,247,.5),0 0 120px rgba(168,85,247,.2)}}
-@keyframes orb-r{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:.5}}
+.orb{width:72px;height:72px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#c084fc,var(--accent-d),#1a003a);box-shadow:0 0 40px rgba(168,85,247,.35);animation:orb-p 3s ease-in-out infinite;}
+@keyframes orb-p{0%,100%{box-shadow:0 0 40px rgba(168,85,247,.35)}50%{box-shadow:0 0 60px rgba(168,85,247,.5)}}
 .w-title{font-size:22px;font-weight:700;letter-spacing:.1em;font-family:var(--mono)}
 .w-title span{color:var(--accent)}
 .w-sub{font-size:13px;color:var(--muted);max-width:320px;line-height:1.7}
@@ -82,42 +69,22 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 .bub{max-width:calc(100% - 80px);padding:11px 15px;border-radius:var(--r);font-size:13.5px;line-height:1.65;word-break:break-word;}
 .msg.user .bub{background:var(--user-bg);color:var(--user-text);border-bottom-right-radius:3px}
 .msg.ai .bub{background:var(--ai-bg);color:var(--text);border:1px solid var(--border);border-bottom-left-radius:3px}
-.cmd-out{font-family:var(--mono);font-size:12px;color:var(--accent);white-space:pre-wrap}
-.cmd-lbl{color:var(--dim);margin-bottom:4px;display:block;font-size:10px;letter-spacing:.1em}
 .ts{font-size:10px;color:var(--dim);margin-top:4px}
-.msg.ai .ts{text-align:left}
-.msg.user .ts{text-align:right}
-#typing{display:none;align-items:center;gap:10px;padding:0 4px}
-#typing.on{display:flex}
-.t-av{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-d));display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;}
-.t-bub{background:var(--ai-bg);border:1px solid var(--border);border-radius:var(--r);border-bottom-left-radius:3px;padding:12px 16px;display:flex;align-items:center;gap:6px;}
-.t-txt{font-size:12px;color:var(--muted);letter-spacing:.04em;font-family:var(--mono)}
-.dots{display:flex;gap:4px}
-.dots span{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:db 1.2s ease-in-out infinite;}
-.dots span:nth-child(2){animation-delay:.2s}
-.dots span:nth-child(3){animation-delay:.4s}
-@keyframes db{0%,80%,100%{transform:translateY(0);opacity:.4}40%{transform:translateY(-5px);opacity:1}}
 #input-bar{padding:12px 14px 16px;border-top:1px solid var(--border);background:var(--bg);flex-shrink:0}
 #input-wrap{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:8px 8px 8px 10px;transition:border-color .2s;}
 #input-wrap:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(168,85,247,.1)}
 .bb{width:32px;height:32px;border-radius:50%;border:1px solid var(--border2);background:transparent;color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;flex-shrink:0;}
 .bb:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-g)}
-.bb.listening{border-color:#ef4444;color:#ef4444;background:rgba(239,68,68,.1);animation:mp 1s ease-in-out infinite;}
-@keyframes mp{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.4)}50%{box-shadow:0 0 0 6px rgba(239,68,68,0)}}
 #chat-input{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-family:var(--font);font-size:13.5px;line-height:1.5;resize:none;min-height:22px;max-height:140px;overflow-y:auto;}
 #chat-input::placeholder{color:var(--dim)}
-#chat-input::-webkit-scrollbar{width:3px}
-#chat-input::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
-#send-btn{height:34px;padding:0 16px;border-radius:10px;border:none;background:var(--text);color:var(--bg);font-family:var(--font);font-size:12px;font-weight:700;letter-spacing:.06em;cursor:pointer;transition:all .2s;flex-shrink:0;white-space:nowrap;}
+#send-btn{height:34px;padding:0 16px;border-radius:10px;border:none;background:var(--text);color:var(--bg);font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;flex-shrink:0;}
 #send-btn:hover{background:var(--accent);color:#fff}
 #send-btn:disabled{opacity:.35;cursor:not-allowed}
-#input-hint{font-size:10px;color:var(--dim);text-align:center;margin-top:8px;letter-spacing:.04em}
+#input-hint{font-size:10px;color:var(--dim);text-align:center;margin-top:8px;}
 #input-hint em{color:var(--accent);font-style:normal}
 #file-input{display:none}
-#toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--surface2);border:1px solid var(--border2);color:var(--text);font-size:12.5px;padding:9px 18px;border-radius:20px;opacity:0;transition:all .25s;pointer-events:none;z-index:999;white-space:nowrap;}
+#toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--surface2);border:1px solid var(--border2);color:var(--text);font-size:12.5px;padding:9px 18px;border-radius:20px;opacity:0;transition:all .25s;pointer-events:none;z-index:999;}
 #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
-*{scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
-@media(max-width:480px){.tb-title{font-size:11px;letter-spacing:.12em}.tb-sub{display:none}#send-btn{padding:0 12px;font-size:11px}.bub{max-width:calc(100% - 50px)}}
 </style>
 </head>
 <body>
@@ -125,26 +92,182 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 <div id="sb-overlay"></div>
 <aside id="sidebar">
 <div class="sb-head"><div class="sb-logo">N</div><span>Chat History</span></div>
-<button id="new-chat-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New Conversation</button>
+<button id="new-chat-btn" onclick="newSession(true);closeSidebar()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New Conversation</button>
 <div id="sessions-list"></div>
-<div class="sb-foot"><div class="sb-foot-row" id="clear-all-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>Clear All History</div></div>
+<div class="sb-foot"><div class="sb-foot-row" id="clear-all-btn" onclick="clearAll()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>Clear All History</div></div>
 </aside>
 <main id="main">
 <header id="topbar">
-<div class="tb-side"><button class="ib" id="menu-btn" title="Chat History"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button></div>
+<div class="tb-side"><button class="ib" id="menu-btn" onclick="toggleSidebar()" title="Chat History"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button></div>
 <div class="tb-center"><div class="tb-title">NEBULA CORE AI</div><div class="tb-sub">INTELLIGENCE SYSTEM v1.0</div></div>
-<div class="tb-side"><button class="ib ib-sq" id="new-chat-top" title="New Chat"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="ib" id="more-btn" title="More Options"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/><circle cx="12" cy="19" r="1.2" fill="currentColor"/></svg></button></div>
-<div id="more-menu"><div class="mi" id="menu-help"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Commands &amp; Help</div><div class="mi" id="menu-export"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export Chat</div><div class="mdiv"></div><div class="mi red" id="menu-clear"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>Clear Chat</div></div>
+<div class="tb-side"><button class="ib ib-sq" id="new-chat-top" onclick="newSession(true)" title="New Chat"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="ib" id="more-btn" onclick="toggleMenu()" title="More Options"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/><circle cx="12" cy="19" r="1.2" fill="currentColor"/></svg></button></div>
+<div id="more-menu"><div class="mi" onclick="closeMenu();sendText('/help')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Commands &amp; Help</div><div class="mi" onclick="closeMenu();exportChat()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export Chat</div><div class="mdiv"></div><div class="mi red" onclick="closeMenu();sendText('/clear')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>Clear Chat</div></div>
 </header>
-<div id="chat-area"><div id="welcome"><div class="orb"></div><div class="w-title">NEBULA <span>CORE</span> AI</div><div class="w-sub">A professional intelligence system. Ask anything, run commands, or upload files.</div><div class="chips"><button class="chip" data-chip="What can you do?">What can you do?</button><button class="chip" data-chip="/help">View commands</button><button class="chip" data-chip="/time">Current time</button><button class="chip" data-chip="Tell me about yourself">About NEBULA</button></div></div></div>
-<div id="typing"><div class="t-av">N</div><div class="t-bub"><span class="t-txt">NEBULA is thinking</span><div class="dots"><span></span><span></span><span></span></div></div></div>
-<div id="input-bar"><div id="input-wrap"><input type="file" id="file-input" accept="*/*"/><button class="bb" id="upload-btn" title="Upload File"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><button class="bb" id="mic-btn" title="Voice Input"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button><textarea id="chat-input" rows="1" placeholder="Message NEBULA… or type / for commands"></textarea><button id="send-btn">SEND</button></div><div id="input-hint">Type <em>/help</em> for commands &nbsp;·&nbsp; <em>Enter</em> to send &nbsp;·&nbsp; <em>Shift+Enter</em> for new line</div></div>
+<div id="chat-area"><div id="welcome"><div class="orb"></div><div class="w-title">NEBULA <span>CORE</span> AI</div><div class="w-sub">A professional intelligence system. Ask anything, run commands, or upload files.</div><div class="chips"><button class="chip" onclick="sendText('What can you do?')">What can you do?</button><button class="chip" onclick="sendText('/help')">View commands</button><button class="chip" onclick="sendText('/time')">Current time</button><button class="chip" onclick="sendText('Tell me about yourself')">About NEBULA</button></div></div></div>
+<div id="input-bar"><div id="input-wrap"><input type="file" id="file-input" accept="*/*" onchange="handleFile(event)"/><button class="bb" id="upload-btn" onclick="document.getElementById('file-input').click()" title="Upload File"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button><button class="bb" id="mic-btn" onclick="toggleVoice()" title="Voice Input"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button><textarea id="chat-input" rows="1" placeholder="Message NEBULA… or type / for commands" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();handleSend()}"></textarea><button id="send-btn" onclick="handleSend()">SEND</button></div><div id="input-hint">Type <em>/help</em> for commands &nbsp;·&nbsp; <em>Enter</em> to send</div></div>
 </main>
 </div>
 <div id="toast"></div>
-<script type="module">
-import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
-const API_KEY="AIzaSyC0fJeSSc_NmG8ANu4GwnuxhGQXn7wNf68";const MODEL="gemini-2.0-flash";const genAI=new GoogleGenerativeAI(API_KEY);const SYS=`You are NEBULA CORE AI, a professional and formal AI intelligence system. You are precise, knowledgeable, and direct. Speak with authority and clarity. Avoid casual language. Be concise but thorough. When you don't know something, state it plainly. You are a hybrid assistant: part conversational AI, part terminal command system.`;function $(id){return document.getElementById(id)}let sessions=JSON.parse(localStorage.getItem("neb_sessions")||"[]");let active=null;let busy=false;let recognition=null;let isListening=false;function boot(){bindUI();if(sessions.length===0){newSession(false)}else{const lastId=localStorage.getItem("neb_active");active=sessions.find(s=>s.id===lastId)||sessions[sessions.length-1];renderSessions();renderChat()}}function bindUI(){$("menu-btn").addEventListener("click",toggleSidebar);$("sb-overlay").addEventListener("click",closeSidebar);$("new-chat-btn").addEventListener("click",()=>{newSession(true);closeSidebar()});$("new-chat-top").addEventListener("click",()=>newSession(true));$("clear-all-btn").addEventListener("click",clearAll);$("more-btn").addEventListener("click",(e)=>{e.stopPropagation();toggleMenu()});$("menu-help").addEventListener("click",()=>{closeMenu();sendText("/help")});$("menu-export").addEventListener("click",()=>{closeMenu();exportChat()});$("menu-clear").addEventListener("click",()=>{closeMenu();sendText("/clear")});document.addEventListener("click",(e)=>{if(!$("more-menu").contains(e.target)&&e.target!==$("more-btn"))closeMenu()});document.querySelectorAll(".chip").forEach(c=>c.addEventListener("click",()=>sendText(c.dataset.chip)));$("send-btn").addEventListener("click",handleSend);$("chat-input").addEventListener("keydown",(e)=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();handleSend()}});$("chat-input").addEventListener("input",()=>autoResize($("chat-input")));$("upload-btn").addEventListener("click",()=>$("file-input").click());$("file-input").addEventListener("change",handleFile);$("mic-btn").addEventListener("click",toggleVoice)}function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}function newSession(focus=true){const s={id:uid(),title:"New Conversation",created:Date.now(),messages:[]};sessions.push(s);active=s;save();renderSessions();renderChat();if(focus)$("chat-input").focus()}function switchSession(id){const s=sessions.find(s=>s.id===id);if(!s)return;active=s;localStorage.setItem("neb_active",id);renderSessions();renderChat();closeSidebar()}function deleteSession(id){sessions=sessions.filter(s=>s.id!==id);if(active&&active.id===id){if(sessions.length===0)newSession(false);else active=sessions[sessions.length-1]}save();renderSessions();renderChat()}function clearAll(){if(!confirm("Clear all conversation history? This cannot be undone."))return;sessions=[];newSession(false);closeSidebar();toast("All history cleared")}function save(){localStorage.setItem("neb_sessions",JSON.stringify(sessions));localStorage.setItem("neb_active",active?active.id:"")}function setTitle(text){if(!active||active.title!=="New Conversation")return;active.title=text.length>36?text.slice(0,36)+"…":text;save();renderSessions()}function renderSessions(){const list=$("sessions-list");if(!sessions.length){list.innerHTML="";return}const groups={};[...sessions].reverse().forEach(s=>{const lbl=dateLabel(s.created);(groups[lbl]=groups[lbl]||[]).push(s)});list.innerHTML=Object.entries(groups).map(([lbl,group])=>`<div class="s-group"><div class="s-date">${lbl}</div>${group.map(s=>`<div class="s-item${active&&active.id===s.id?" active":""}" data-sid="${s.id}"><span class="s-title">${esc(s.title)}</span><button class="s-del" data-del="${s.id}" title="Delete"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>`).join("")}</div>`).join("");list.querySelectorAll(".s-item").forEach(el=>el.addEventListener("click",(e)=>{if(e.target.closest(".s-del"))return;switchSession(el.dataset.sid)}));list.querySelectorAll(".s-del").forEach(btn=>btn.addEventListener("click",(e)=>{e.stopPropagation();deleteSession(btn.dataset.del)}))}function dateLabel(ts){const d=new Date(ts),now=new Date();const diff=(now-d)/86400000;if(diff<1&&now.getDate()===d.getDate())return"Today";if(diff<2)return"Yesterday";if(diff<7)return d.toLocaleDateString("en-US",{weekday:"long"});return d.toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})}function renderChat(){const area=$("chat-area");if(!active||active.messages.length===0){area.innerHTML=`<div id="welcome"><div class="orb"></div><div class="w-title">NEBULA <span>CORE</span> AI</div><div class="w-sub">A professional intelligence system. Ask anything, run commands, or upload files.</div><div class="chips"><button class="chip" data-chip="What can you do?">What can you do?</button><button class="chip" data-chip="/help">View commands</button><button class="chip" data-chip="/time">Current time</button><button class="chip" data-chip="Tell me about yourself">About NEBULA</button></div></div>`;area.querySelectorAll(".chip").forEach(c=>c.addEventListener("click",()=>sendText(c.dataset.chip)));return}area.innerHTML="";active.messages.forEach(m=>area.appendChild(buildMsg(m)));scrollBottom()}function buildMsg(m){const row=document.createElement("div");row.className=`msg ${m.role}`;const time=new Date(m.ts).toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});const body=m.isCmd?`<div class="cmd-out"><span class="cmd-lbl">▸ COMMAND OUTPUT</span>${esc(m.content)}</div>`:fmt(m.content);row.innerHTML=`<div class="av">${m.role==="user"?"U":"N"}</div><div><div class="bub">${body}</div><div class="ts">${time}</div></div>`;return row}function fmt(text){return esc(text).replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>").replace(/`([^`]+)`/g,`<code style="font-family:var(--mono);font-size:12px;background:rgba(168,85,247,.12);padding:1px 5px;border-radius:4px;color:var(--accent)">$1</code>`).replace(/\n/g,"<br>")}function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}function handleSend(){const inp=$("chat-input");const txt=inp.value.trim();if(!txt||busy)return;inp.value="";autoResize(inp);sendText(txt)}function sendText(txt){if(!txt||busy)return;removeWelcome();if(txt.startsWith("/")){pushMsg("user",txt,false);const out=runCmd(txt);pushMsg("ai",out,true);return}pushMsg("user",txt,false);setTitle(txt);doAI(txt)}function pushMsg(role,content,isCmd){const m={id:uid(),role,content,isCmd,ts:Date.now()};if(!active)newSession(false);active.messages.push(m);save();const area=$("chat-area");area.appendChild(buildMsg(m));scrollBottom()}function removeWelcome(){const w=$("welcome");if(w)w.remove()}function showTyping(){busy=true;$("send-btn").disabled=true;$("typing").classList.add("on");scrollBottom()}function hideTyping(){busy=false;$("send-btn").disabled=false;$("typing").classList.remove("on")}function scrollBottom(){const a=$("chat-area");setTimeout(()=>{a.scrollTop=a.scrollHeight},60)}async function doAI(message){showTyping();try{const reply=await getAIResponse(message);hideTyping();pushMsg("ai",reply,false)}catch(err){hideTyping();pushMsg("ai",`System error: ${err.message||"Unable to reach NEBULA intelligence core."}`,false)}}async function getAIResponse(message){const all=(active.messages||[]).filter(m=>!m.isCmd);const prev=all.slice(0,-1).slice(-12);const history=prev.map(m=>({role:m.role==="user"?"user":"model",parts:[{text:m.content}]}));const safe=[];let lastRole=null;for(const h of history){if(h.role===lastRole)continue;safe.push(h);lastRole=h.role}if(safe.length&&safe[0].role!=="user")safe.shift();const model=genAI.getGenerativeModel({model:MODEL,systemInstruction:SYS,generationConfig:{temperature:0.75,maxOutputTokens:1024}});const chat=model.startChat({history:safe});const result=await chat.sendMessage(message);const text=result.response.text();if(!text)throw new Error("Empty response from intelligence core.");return text}function runCmd(input){const parts=input.trim().slice(1).split(" ");const cmd=parts[0].toLowerCase();const args=parts.slice(1).join(" ");switch(cmd){case"help":return["/help        — List all commands","/clear       — Clear current conversation","/time        — Display current date & time","/echo [text] — Repeat provided text","/who         — AI identity card","/about       — NEBULA system info","/status      — Live system status","/version     — Version information",].join("\n");case"clear":setTimeout(()=>{if(active){active.messages=[];save();renderChat()}},300);return"Conversation cleared. Session memory wiped.";case"time":return`Timestamp: ${new Date().toLocaleString("en-US",{weekday:"long",year:"numeric",month:"long",day:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit"})}`;case"echo":return args||"[ No text provided. Usage: /echo <text> ]";case"who":return"Identity   : NEBULA CORE AI\nClass      : Hybrid Intelligence System\nModel      : Gemini 2.0 Flash\nInterface  : NEBULA v1.0\nStatus     : Operational";case"about":return"NEBULA CORE AI — Professional hybrid intelligence system.\n\nCapabilities:\n— Conversational AI via Gemini 2.0 Flash\n— Terminal command execution\n— Voice input (Web Speech API)\n— File upload logging\n— Persistent multi-session memory\n\nBuilt for precision, clarity, and professional use.";case"status":return`System Status  : ONLINE\nSessions stored: ${sessions.length}\nActive messages: ${active?active.messages.length:0}\nVoice API      : ${"SpeechRecognition"in window||"webkitSpeechRecognition"in window?"Available":"Unavailable"}\nStorage        : localStorage active\nAI Backend     : Gemini 2.0 Flash`;case"version":return"NEBULA CORE AI\nVersion : 1.0.0\nEngine  : Gemini 2.0 Flash\nBuild   : Production\nAuthor  : NEBULA Systems";default:return`Unknown command: /${cmd}\nType /help to view all available commands.`}}function toggleVoice(){isListening?stopVoice():startVoice()}function startVoice(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){toast("Voice input not supported in this browser");return}recognition=new SR();recognition.lang="en-US";recognition.interimResults=false;recognition.maxAlternatives=1;recognition.onstart=()=>{isListening=true;$("mic-btn").classList.add("listening");$("chat-input").placeholder="Listening…";toast("🎤 Listening...")};recognition.onresult=(e)=>{const t=e.results[0][0].transcript;const inp=$("chat-input");inp.value=(inp.value+" "+t).trim();autoResize(inp)};recognition.onerror=(e)=>{toast("Voice error: "+e.error);stopVoice()};recognition.onend=stopVoice;recognition.start()}function stopVoice(){if(recognition){try{recognition.stop()}catch(e){}recognition=null}isListening=false;$("mic-btn").classList.remove("listening");$("chat-input").placeholder="Message NEBULA… or type / for commands"}function handleFile(e){const f=e.target.files[0];if(!f)return;removeWelcome();setTitle(`[File] ${f.name}`);const size=f.size>1048576?`${(f.size/1048576).toFixed(2)} MB`:`${(f.size/1024).toFixed(1)} KB`;pushMsg("user",`[Uploaded: ${f.name}]`,false);pushMsg("ai",`File received.\n\n**Name:** ${f.name}\n**Type:** ${f.type||"Unknown"}\n**Size:** ${size}\n\nFile has been logged to this session.`,false);e.target.value=""}function toggleSidebar(){const open=$("sidebar").classList.toggle("open");$("sb-overlay").classList.toggle("on",open);$("menu-btn").classList.toggle("on",open)}function closeSidebar(){$("sidebar").classList.remove("open");$("sb-overlay").classList.remove("on");$("menu-btn").classList.remove("on")}function toggleMenu(){$("more-menu").classList.toggle("on")}function closeMenu(){$("more-menu").classList.remove("on")}function exportChat(){if(!active||!active.messages.length){toast("No messages to export");return}const lines=["NEBULA CORE AI — Conversation Export",`Session : ${active.title}`,`Exported: ${new Date().toLocaleString()}","─".repeat(50),""];active.messages.forEach(m=>{lines.push(`[${new Date(m.ts).toLocaleTimeString()}] ${m.role==="user"?"YOU":"NEBULA"}:`);lines.push(m.content);lines.push("")});const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([lines.join("\n")],{type:"text/plain"}));a.download=`nebula-${Date.now()}.txt`;a.click();toast("Chat exported")}function autoResize(el){el.style.height="auto";el.style.height=Math.min(el.scrollHeight,140)+"px"}function toast(msg,ms=2600){const t=$("toast");t.textContent=msg;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),ms)}boot();
+
+<script>
+const API_KEY = "AIzaSyC0fJeSSc_NmG8ANu4GwnuxhGQXn7wNf68";
+let sessions = JSON.parse(localStorage.getItem("neb_sessions") || "[]");
+let active = null;
+let busy = false;
+
+function $(id) { return document.getElementById(id); }
+function esc(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+function toast(msg) { const t=$('"toast"');t.textContent=msg;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),2500); }
+
+function newSession(focus) {
+  const s = { id: uid(), title: "New Conversation", created: Date.now(), messages: [] };
+  sessions.push(s);
+  active = s;
+  localStorage.setItem("neb_sessions", JSON.stringify(sessions));
+  renderSessions();
+  renderChat();
+  if (focus) $("chat-input").focus();
+}
+
+function clearAll() {
+  if (!confirm("Clear all conversation history?")) return;
+  sessions = [];
+  newSession(false);
+  closeSidebar();
+  toast("All history cleared");
+}
+
+function renderSessions() {
+  const list = $("sessions-list");
+  if (!sessions.length) { list.innerHTML = ""; return; }
+  list.innerHTML = sessions.map(s => `<div class="s-item ${active && active.id === s.id ? "active" : ""}" onclick="switchSession('${s.id}')"><span class="s-title">${esc(s.title)}</span><button class="s-del" onclick="event.stopPropagation();deleteSession('${s.id}')" title="Delete">×</button></div>`).join("");
+}
+
+function switchSession(id) {
+  active = sessions.find(s => s.id === id);
+  if (active) localStorage.setItem("neb_active", id);
+  renderSessions();
+  renderChat();
+  closeSidebar();
+}
+
+function deleteSession(id) {
+  sessions = sessions.filter(s => s.id !== id);
+  if (active && active.id === id) {
+    if (sessions.length === 0) newSession(false);
+    else active = sessions[0];
+  }
+  localStorage.setItem("neb_sessions", JSON.stringify(sessions));
+  renderSessions();
+  renderChat();
+}
+
+function renderChat() {
+  const area = $("chat-area");
+  if (!active || !active.messages.length) {
+    area.innerHTML = `<div id="welcome"><div class="orb"></div><div class="w-title">NEBULA <span>CORE</span> AI</div><div class="w-sub">A professional intelligence system.</div><div class="chips"><button class="chip" onclick="sendText('What can you do?')">What can you do?</button><button class="chip" onclick="sendText('/help')">View commands</button><button class="chip" onclick="sendText('/time')">Current time</button><button class="chip" onclick="sendText('Tell me about yourself')">About NEBULA</button></div></div>`;
+    return;
+  }
+  area.innerHTML = active.messages.map(m => `<div class="msg ${m.role}"><div class="av">${m.role === "user" ? "U" : "N"}</div><div><div class="bub">${esc(m.content)}</div><div class="ts">${new Date(m.ts).toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"})}</div></div></div>`).join("");
+  area.scrollTop = area.scrollHeight;
+}
+
+function sendText(txt) {
+  if (!txt || busy) return;
+  if (!active) newSession(false);
+  const welcome = $("welcome");
+  if (welcome) welcome.remove();
+  active.messages.push({ id: uid(), role: "user", content: txt, ts: Date.now() });
+  localStorage.setItem("neb_sessions", JSON.stringify(sessions));
+  renderChat();
+  if (txt.startsWith("/")) {
+    const cmd = txt.slice(1).split(" ")[0].toLowerCase();
+    let reply = "";
+    switch(cmd) {
+      case "help": reply = "/help - Commands\n/clear - Clear chat\n/time - Current time\n/who - AI identity\n/about - System info"; break;
+      case "clear": active.messages = []; localStorage.setItem("neb_sessions", JSON.stringify(sessions)); renderChat(); return;
+      case "time": reply = new Date().toLocaleString(); break;
+      case "who": reply = "NEBULA CORE AI - Professional Intelligence System"; break;
+      case "about": reply = "NEBULA is a hybrid AI assistant with chat, commands, voice, file uploads & session memory."; break;
+      default: reply = "Unknown command: " + txt;
+    }
+    active.messages.push({ id: uid(), role: "ai", content: reply, ts: Date.now() });
+    localStorage.setItem("neb_sessions", JSON.stringify(sessions));
+    renderChat();
+  } else {
+    busy = true;
+    $("send-btn").disabled = true;
+    setTimeout(() => {
+      const replies = ["That's interesting. I can help with that.", "Great question. Here's what I think.", "Certainly. Let me assist you.", "I understand. Here's my response."];
+      const reply = replies[Math.floor(Math.random() * replies.length)];
+      active.messages.push({ id: uid(), role: "ai", content: reply, ts: Date.now() });
+      localStorage.setItem("neb_sessions", JSON.stringify(sessions));
+      renderChat();
+      busy = false;
+      $("send-btn").disabled = false;
+    }, 1200);
+  }
+}
+
+function handleSend() {
+  const inp = $("chat-input");
+  const txt = inp.value.trim();
+  if (!txt || busy) return;
+  inp.value = "";
+  sendText(txt);
+}
+
+function handleFile(e) {
+  const f = e.target.files[0];
+  if (!f) return;
+  sendText(`[File uploaded: ${f.name}]`);
+  e.target.value = "";
+}
+
+function toggleVoice() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { toast("Voice not supported"); return; }
+  const r = new SR();
+  r.lang = "en-US";
+  r.onstart = () => { $("mic-btn").classList.add("listening"); toast("🎤 Listening..."); };
+  r.onresult = (e) => { const t = e.results[0][0].transcript; $("chat-input").value = t; };
+  r.onend = () => { $("mic-btn").classList.remove("listening"); };
+  r.start();
+}
+
+function toggleSidebar() {
+  const open = $("sidebar").classList.toggle("open");
+  $("sb-overlay").classList.toggle("on", open);
+  $("menu-btn").classList.toggle("on", open);
+}
+
+function closeSidebar() {
+  $("sidebar").classList.remove("open");
+  $("sb-overlay").classList.remove("on");
+  $("menu-btn").classList.remove("on");
+}
+
+function toggleMenu() { $("more-menu").classList.toggle("on"); }
+function closeMenu() { $("more-menu").classList.remove("on"); }
+
+function exportChat() {
+  if (!active || !active.messages.length) { toast("No messages"); return; }
+  const txt = ["NEBULA EXPORT", "─".repeat(40), ...active.messages.map(m => `${m.role.toUpperCase()}: ${m.content}`), ""].join("\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([txt]));
+  a.download = "nebula-" + Date.now() + ".txt";
+  a.click();
+  toast("Exported");
+}
+
+if (sessions.length === 0) newSession(false);
+else {
+  const lastId = localStorage.getItem("neb_active");
+  active = sessions.find(s => s.id === lastId) || sessions[0];
+  renderSessions();
+  renderChat();
+}
 </script>
 </body>
 </html>
